@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Allerta Stencil');
+
 .app{
-  background-image: url('https://mocah.org/uploads/posts/125023-light-purple-texture-pattern-hd.jpg');
-  background-size: 40%;
+  background-image: url('https://wallpapercave.com/wp/wp5843708.jpg');
+  background-size: 100%;
   height: 100vh;
   width: 100vw;
   background-position: center;
@@ -12,16 +14,16 @@
 .header{
   height: 16vh;
   width: 100vw;
-  background-color: thistle;
+  background-color:transparent;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   box-sizing: border-box;
   align-items: center;
 }
 
 .title{
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 70px;
+  font-family: Allerta Stencil;
+  font-size: 50px;
 }
 
 .create-hero-button{
@@ -45,7 +47,7 @@
   top: 16vh;
   box-sizing: border-box;
   flex-wrap: wrap;
-  z-index: 1;
+  z-index: 3;
   padding: 20px;
 }
 
@@ -63,10 +65,13 @@
 }
 
 .submit{
-  background-color:lightseagreen;
+  margin: 10px;
   height: 50px;
-  width: 170px;
-  border-radius: 5%;
+  width: 150px;
+  color: darkmagenta;
+  background-color: lightpink;
+  box-sizing: border-box;
+  font-size: 19px;
 }
 
 .display-container{
@@ -112,10 +117,15 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: inherit;   /*look at this one */
   justify-content: space-evenly;
   align-items: flex-start;
-  
+  overflow: auto
+}
+
+.middle-hero {
+  margin: 5px;
+  text-align: left;
 }
 
 .damage-container{
@@ -194,9 +204,17 @@
   border-radius: 5%;
 }
 
-.edit-hero{
+.edit-hero-button{
   background-color:lightseagreen;
   height: 50px;
   width: 170px;
+  border-radius: 5%;
+}
+
+.edit {
+  background-color:lightseagreen;
+  height: 50px;
+  width: 150px;
+  margin: 10px;
   border-radius: 5%;
 }

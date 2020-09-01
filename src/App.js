@@ -31,26 +31,27 @@ export default class App extends Component {
     })
   }
 
-  createNewHero(hero_id, name, role, description, primary, secondary, ability1, ability2, ultimate) {
-    axios.post('/api/heroes').then(res => {
-      this.setState({
-        heroes: res.data.heroes
-      })
-      this.setMiddleHero(hero_id)
-    })
-  }
-
-  editHero(hero_id, name, role, description, primary, secondary, ability1, ability2, ultimate) {
-    axios.put(`/api/heroes/${hero_id}`).then(res => {
+  createNewHero(heroInfo) {
+    axios.post('/api/heroes', heroInfo).then(res => {
+      // console.log(res.data)
       this.setState({
         heroes: res.data
       })
+      this.setMiddleHero(res.data.newHero)
+    })
+  }
+
+  editHero(hero_id, updatedInfo) {
+    axios.put(`/api/heroes/${hero_id}`, updatedInfo).then(res => {
+      this.setState({
+        heroes: res.data
+      })
+      this.setMiddleHero(res.data.modifiedHero)
     })
   }
 
   setMiddleHero(hero_id) {
     axios.get(`/api/heroes/${hero_id}`).then(res => {
-      console.log(res.data)
       this.setState({
         middleHero: res.data
       })
@@ -58,6 +59,7 @@ export default class App extends Component {
   }
 
   deleteHero(hero_id) {
+    console.log(hero_id)
     axios.delete(`/api/heroes/${hero_id}`).then(res => {
       this.setState({
         middleHero: {},
@@ -77,6 +79,7 @@ export default class App extends Component {
           heroes={this.state.heroes}
           setMiddleHero={this.setMiddleHero}
           editHero={this.editHero}
+          middleHero={this.state.middleHero}
         />
         <Display
           tanks={this.state.tanks}

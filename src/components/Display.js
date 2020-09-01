@@ -8,7 +8,7 @@ import MiddleDisplay from './MiddleDisplay'
 export default function Display(props) {
 
 
-  console.log(props.middleHero)
+
   return (
     <div className='display-container'>
       < Tanks tanks={props.tanks} setMiddleHero={props.setMiddleHero} />

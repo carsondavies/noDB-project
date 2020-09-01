@@ -4,9 +4,9 @@ let heroId = heroes[heroes.length - 1].id + 1
 
 module.exports = {
   getAllHeroes: (req, res) => {
-    const tanks = heroes.filter(element => element.role === "Tank")
-    const support = heroes.filter(element => element.role === "Support")
-    const damage = heroes.filter(element => element.role === "Damage")
+    let tanks = heroes.filter(element => element.role === "Tank")
+    let support = heroes.filter(element => element.role === "Support")
+    let damage = heroes.filter(element => element.role === "Damage")
     res.status(200).send({ tanks, support, damage, heroes })
   },
 
@@ -26,53 +26,88 @@ module.exports = {
   },
 
   createNewHero: (req, res) => {
-    const { name, role, description, primary, secondary, ability1, ability2, ultimate } = req.body
+    const { name, role, description, imgURL, primary, primaryDescription, secondary, secondaryDescription, ability1, ability1Description, ability2, ability2Description, ultimate, ultimateDescription } = req.body
 
     const newHero = {
-      heroId,
+      id: heroId,
       name,
       role,
       description,
-      primary,
-      secondary,
-      ability1,
-      ability2,
-      ultimate,
+      imgURL,
+      primary: {
+        name: primary,
+        description: primaryDescription
+      },
+      secondary: {
+        name: secondary,
+        description: secondaryDescription
+      },
+      ability1: {
+        name: ability1,
+        description: ability1Description
+      },
+      ability2: {
+        name: ability2,
+        description: ability2Description
+      },
+      ultimate: {
+        name: ultimate,
+        description: ultimateDescription
+      },
     }
 
     heroes.push(newHero)
 
     heroId++
+    // console.log(newHero)
+    res.status(200).send({ heroes, newHero: newHero.id })
 
-    res.status(200).send(heroes)
 
   },
 
   editHero: (req, res) => {
     const { hero_id } = req.params
-    const { name, role, description, primary, secondary, ability1, ability2, ultimate } = req.body
-
+    const { name, role, description, primary, primaryDescription, secondary, secondaryDescription, ability1, ability1Description, ability2, ability2Description, ultimate, ultimateDescription } = req.body
+    console.log(req.body)
     const index = heroes.findIndex(element => element.id === +hero_id)
     if (index === -1) {
       return res.status(404).send('hero not found')
     }
-
+    console.log("IT", index)
     let existingHero = heroes[index]
     let modifiedHero = {
       id: existingHero.id,
       name: name || existingHero.name,
       role: role || existingHero.role,
       description: description || existingHero.description,
-      primary: primary || existingHero.primary,
-      secondary: secondary || existingHero.secondary,
-      ability1: ability1 || existingHero.ability1,
-      ability2: ability2 || existingHero.ability2,
-      ultimate: ultimate || existingHero.ultimate
+      primary: {
+        name: primary || existingHero.primary.name,
+        description: primaryDescription || existingHero.primary.description,
+      },
+
+      secondary: {
+        name: secondary || existingHero.secondary.name,
+        description: secondaryDescription || existingHero.secondary.description,
+      },
+      ability1: {
+        name: ability1 || existingHero.ability1.name,
+        description: ability1Description || existingHero.ability1.description,
+      },
+      ability2: {
+        name: ability2 || existingHero.ability2.name,
+        description: ability2Description || existingHero.ability2.description,
+      },
+      ultimate: {
+        name: ultimate || existingHero.ultimate.name,
+        description: ultimateDescription || existingHero.ultimate.description
+      }
+
     }
 
     heroes[index] = modifiedHero
+    console.log(modifiedHero)
 
-    res.status(200).send(heroes)
+    return res.status(200).send({ heroes, modifiedHero: modifiedHero.id })
 
   },
 
@@ -81,14 +116,14 @@ module.exports = {
 
     const index = heroes.findIndex(element => element.id === +hero_id)
     if (index === -1) {
-      res.status(404).send('hero not found')
+      return res.status(404).send('hero not found')
     } else {
+      let tanks = heroes.filter(element => element.role === "Tank")
+      let support = heroes.filter(element => element.role === "Support")
+      let damage = heroes.filter(element => element.role === "Damage")
       heroes.splice(index, 1)
+      return res.status(200).send({ tanks, support, damage, heroes })
     }
-    const tanks = heroes.filter(element => element.role === "Tank")
-    const support = heroes.filter(element => element.role === "Support")
-    const damage = heroes.filter(element => element.role === "Damage")
-    res.status(200).send({ tanks, support, damage, heroes })
   }
 
 }

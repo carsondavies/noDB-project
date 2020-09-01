@@ -7,6 +7,7 @@ export default class MiddleDisplay extends Component {
       middleHero: {},
       balanceHero: false
     }
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount() {
@@ -25,16 +26,11 @@ export default class MiddleDisplay extends Component {
 
 
   render() {
-    console.log('THIS.PROPs.MIDDLEHERO', this.props.middleHero)
     const { name, role, description, primary, secondary, ability1, ability2, ultimate } = this.props.middleHero
-    console.log("PRIMARY VALUE", primary)
-    console.log(this.state)
     return (
       <div className='middle-display'>
         <div className='middle-hero'>Name: {name}</div>
         <div className='middle-hero'>Role: {role}</div>
-        <button className='delete-hero' onClick={this.props.deleteHero}>DELETE HERO</button>
-        <button className='edit-hero' onclick={this.handleClick}>EDIT HERO</button>
         <div className='middle-hero'>{description}</div>
         <div className='middle-hero'>Primary: {primary?.name}</div>
         <div className='middle-hero'>{primary?.description}</div>
@@ -46,8 +42,7 @@ export default class MiddleDisplay extends Component {
         <div className='middle-hero'>{ability2?.description}</div>
         <div className='middle-hero'>Ultimate: {ultimate?.name}</div>
         <div className='middle-hero'>{ultimate?.description}</div>
-
-
+        <button className='delete-hero' onClick={() => this.props.deleteHero(this.props.middleHero.id)}>DELETE HERO</button>
       </div >
     )
   }
